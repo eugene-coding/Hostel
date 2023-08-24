@@ -30,6 +30,7 @@ builder.Services.AddDbContext<Context>(options =>
 });
 
 builder.Services.AddScoped<IConcertService, ConcertService>();
+builder.Services.AddScoped<ISettingService, SettingService>();
 
 var app = builder.Build();
 
