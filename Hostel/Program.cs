@@ -31,6 +31,8 @@ builder.Services.AddDbContext<Context>(options =>
     }
 });
 
+builder.Services.AddScoped<IConcertService, ConcertService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
