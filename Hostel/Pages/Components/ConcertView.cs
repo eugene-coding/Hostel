@@ -52,7 +52,7 @@ public class ConcertView
     public string Time { get; }
 
     /// <inheritdoc cref="Concert.TicketsLeft"/>
-    public ushort TicketsLeft { get; init; }
+    public required int TicketsLeft { get; init; }
 
     /// <inheritdoc cref="Concert.MinPrice"/>
     public string MinPrice { get; }

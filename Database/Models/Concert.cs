@@ -14,7 +14,7 @@ public sealed class Concert
     /// ID концерта.
     /// </summary>
     [Comment("ID концерта.")]
-    public uint Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Название концерта.
@@ -41,17 +41,17 @@ public sealed class Concert
     /// Время проведения.
     /// </summary>
     [Comment("Время проведения.")]
-    public DateTime DateTime { get; set; }
+    public required DateTime DateTime { get; set; }
 
     /// <summary>
     /// Количество оставшихся билетов.
     /// </summary>
     [Comment("Количество оставшихся билетов.")]
-    public ushort TicketsLeft { get; set; }
+    public required int TicketsLeft { get; set; }
 
     /// <summary>
     /// Минимальная цена билета.
     /// </summary>
     [Comment("Минимальная цена билета.")]
-    public ushort MinPrice { get; set; }
+    public required int MinPrice { get; set; }
 }
