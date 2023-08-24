@@ -7,8 +7,6 @@ using Hostel;
 
 using Microsoft.EntityFrameworkCore;
 
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
@@ -21,7 +19,7 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString, options =>
     {
         options.EnableRetryOnFailure()
-            .MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+            .MigrationsAssembly(typeof(Context).Assembly.GetName().Name);
     });
 
     if (builder.Environment.IsDevelopment())
