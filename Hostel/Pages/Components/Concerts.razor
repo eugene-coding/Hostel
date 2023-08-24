@@ -21,29 +21,29 @@
 
     <table class="table table-hover align-middle">
         <tbody>
-            @for (var i = 0; i < 10; i++)
+            @foreach(var concert in _concerts)
             {
                 <tr>
-                    <td class="date d-flex flex-column flex-md-row text-center text-md-start ">
-                        <div class="day">28</div>
+                    <td class="date d-flex flex-column flex-md-row text-center text-md-start">
+                        <div class="day">@concert.Day</div>
 
                         <div class="month-week-and-time ms-md-3">
                             <div>
-                                Октября, <time class="time">19:00</time>
+                                @concert.Month, <time class="time">@concert.Time</time>
                             </div>
 
-                            <div>Суббота</div>
+                            <div>@concert.DayOfWeek</div>
                         </div>
                     </td>
 
                     <td class="text-center text-md-start">
-                        <div class="name">Fan Fest</div>
-                        <div>Москва, Live Арена</div>
+                        <div class="name">@concert.Name</div>
+                        <div>@concert.City, @concert.Location</div>
                     </td>
 
                     <td class="text-center">
-                        <div>42 билета</div>
-                        <div>от 2 000 ₽</div>
+                        <div>@concert.TicketsLeft билета</div>
+                        <div>от @concert.MinPrice ₽</div>
                     </td>
 
                     <td class="text-end">
