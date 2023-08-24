@@ -22,6 +22,11 @@ public sealed class Context : DbContext
     /// </summary>
     public DbSet<Concert> Concerts { get; set; }
 
+    /// <summary>
+    /// Таблица с настройками.
+    /// </summary>
+    internal DbSet<Setting> Settings { get; set; }
+    
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
