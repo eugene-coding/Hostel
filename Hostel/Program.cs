@@ -1,25 +1,50 @@
+using Core.Interfaces;
+
+using Database;
+using Database.Services;
+
+using Hostel;
+
+using Microsoft.EntityFrameworkCore;
+
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorComponents()
+    .AddServerComponents();
+
+builder.Services.AddDbContext<Context>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Database");
+
+    options.UseSqlServer(connectionString, options =>
+    {
+        options.EnableRetryOnFailure()
+            .MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+    });
+
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableDetailedErrors()
+            .EnableSensitiveDataLogging();
+    }
+});
+
+builder.Services.AddScoped<IConcertService, ConcertService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
+app.MapRazorComponents<App>();
 
 app.Run();

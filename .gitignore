@@ -16,6 +16,9 @@
 # Mono auto generated files
 mono_crash.*
 
+# Libman
+[Ll]ib/
+
 # Migrations
 [Mm]igrations/
 
