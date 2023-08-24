@@ -22,6 +22,7 @@ public sealed class Context : DbContext
     /// </summary>
     public DbSet<Concert> Concerts { get; set; }
 
+    /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Concert>().HasData(
