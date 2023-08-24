@@ -8,7 +8,7 @@ namespace Database.Constants;
 internal static class SettingKey
 {
     /// <summary>
-    /// Количество концертов на страницу.
+    /// Количество концертов на странице.
     /// </summary>
     public const string ConcertsPerPage = "concerts-per-page";
 }
