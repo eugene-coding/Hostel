@@ -1,4 +1,6 @@
-﻿namespace Hostel.Pages.Components;
+﻿using Database.Models;
+
+namespace Hostel.Pages.Components;
 
 /// <summary>
 /// Представление концерта.
@@ -12,17 +14,22 @@ public class ConcertView
     /// <param name="minPrice">Минимальная цена билета.</param>
     public ConcertView(DateTime dateTime, int minPrice)
     {
-        Day = dateTime.ToString("dd");
         Month = dateTime.ToString("MMMM");
-        Time = dateTime.ToString("t");
         DayOfWeek = dateTime.ToString("dddd");
+        Day = dateTime.ToString("dd");
+        Time = dateTime.ToString("t");
+
         MinPrice = minPrice.ToString("# ##0");
     }
 
-    /// <summary>
-    /// День проведения.
-    /// </summary>
-    public string Day { get; }
+    /// <inheritdoc cref="Concert.Name"/>
+    public required string Name { get; init; }
+
+    /// <inheritdoc cref="Concert.City"/>
+    public required string City { get; init; }
+
+    /// <inheritdoc cref="Concert.Location"/>
+    public required string Location { get; init; }
 
     /// <summary>
     /// Месяц проведения.
@@ -30,37 +37,23 @@ public class ConcertView
     public string Month { get; }
 
     /// <summary>
-    /// Время проведения.
-    /// </summary>
-    public string Time { get; }
-
-    /// <summary>
     /// День недели.
     /// </summary>
     public string DayOfWeek { get; }
 
     /// <summary>
-    /// Название концерта.
+    /// День проведения.
     /// </summary>
-    public required string Name { get; init; }
+    public string Day { get; }
 
     /// <summary>
-    /// Город проведения.
+    /// Время проведения.
     /// </summary>
-    public required string City { get; init; }
+    public string Time { get; }
 
-    /// <summary>
-    /// Место проведения.
-    /// </summary>
-    public required string Location { get; init; }
-
-    /// <summary>
-    /// Количество оставшихся билетов.
-    /// </summary>
+    /// <inheritdoc cref="Concert.TicketsLeft"/>
     public ushort TicketsLeft { get; init; }
 
-    /// <summary>
-    /// Минимальная цена билета.
-    /// </summary>
+    /// <inheritdoc cref="Concert.MinPrice"/>
     public string MinPrice { get; }
 }
