@@ -1,5 +1,8 @@
 ﻿namespace Hostel.Pages.Components;
 
+/// <summary>
+/// Блок с предстоящими концертами.
+/// </summary>
 public partial class Concerts
 {
     private readonly IEnumerable<ConcertView> _concerts = new List<ConcertView>
