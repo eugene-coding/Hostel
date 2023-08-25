@@ -12,11 +12,12 @@ namespace Hostel.Shared;
 public partial class Concerts
 {
     private readonly List<ConcertModel> _concerts = new();
-    private List<string> _cities = new();
+    private readonly List<string> _cities = new();
 
     private bool _displayLoadMoreButton;
     private int _concertsCount;
     private int _pageToLoad = 1;
+    private string? _city;
 
     [Inject] private IStringLocalizer<Concerts> Localizer { get; init; } = null!;
     [Inject] private IConcertService Service { get; init; } = null!;
@@ -51,5 +52,24 @@ public partial class Concerts
         }
 
         _displayLoadMoreButton = _concertsCount > _concerts.Count;
+    }
+
+    private async Task GetFilteredByCity()
+    {
+        await foreach (var concert in Service.GetConcertModelsAsync(_city, 1))
+        {
+            _concerts.Add(concert);
+        }
+
+        _displayLoadMoreButton = _concertsCount > _concerts.Count;
+    }
+
+    private async Task CityChanged(ChangeEventArgs e)
+    {
+        _city = string.IsNullOrWhiteSpace(e.Value?.ToString()) ? null : e.Value?.ToString();
+
+        _concerts.Clear();
+
+        await GetFilteredByCity();
     }
 }
