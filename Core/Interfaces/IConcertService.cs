@@ -21,6 +21,14 @@ public interface IConcertService
     IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page);
 
     /// <summary>
+    /// Возвращает список предстоящих концертов на странице под номером <paramref name="page"/>.
+    /// </summary>
+    /// <param name="city">Город проведения концертов.</param>
+    /// <param name="page">Номер страницы.</param>
+    /// <returns>Список предстоящих концертов на странице под номером <paramref name="page"/>.</returns>
+    IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(string? city, int page);
+
+    /// <summary>
     /// Возвращает список городов, в которых планируются концерты.
     /// </summary>
     /// <returns>Список городов, в которых планируются концерты.</returns>
