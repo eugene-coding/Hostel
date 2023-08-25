@@ -2,6 +2,7 @@
 using Core.Models;
 
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 
 namespace Hostel.Shared;
 
@@ -17,6 +18,7 @@ public partial class Concerts
     private int _concertsCount;
     private int _pageToLoad = 1;
 
+    [Inject] private IStringLocalizer<Concerts> Localizer { get; init; } = null!;
     [Inject] private IConcertService Service { get; init; } = null!;
 
     /// <inheritdoc/>

@@ -1,14 +1,14 @@
 ﻿@attribute [RenderModeServer]
 
 <section class="section">
-    <h2 class="title">Концерты</h2>
+    <h2 class="title">@Localizer["Heading title"]</h2>
 
 
     <form class="mb-3">
         <div class="row justify-content-between">
             <div class="col-4 col-lg-3">
                 <select class="form-select">
-                    <option selected>Все города</option>
+                    <option selected>@Localizer["All cities"]</option>
 
                     @foreach (var city in _cities)
                     {
@@ -53,12 +53,12 @@
                             </td>
 
                             <td class="text-center">
-                                <div>@concert.TicketsLeft билета</div>
-                                <div>от @concert.MinPrice ₽</div>
+                                <div>@Localizer["Tickets left", concert.TicketsLeft]</div>
+                                <div>@Localizer["Min price", concert.MinPrice]</div>
                             </td>
 
                             <td class="text-end">
-                                <button class="btn btn-primary" type="button">Билеты</button>
+                                <button class="btn btn-primary" type="button">@Localizer["Tickets"]</button>
                             </td>
                         </tr>
                     }
@@ -69,21 +69,22 @@
             @if (_displayLoadMoreButton)
             {
                 <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" @onclick="GetNextPageAsync">Загрузить ещё</button>
+                    <button class="btn btn-primary" @onclick="GetNextPageAsync">@Localizer["Load more"]</button>
                 </div>
             }
+
         }
         else
         {
-            <p class="text-center">С текущим фильтром ближайших концертов нет. Попробуйте изменить параметры поиска.</p>
+            <p class="text-center">@Localizer["No filter result"]</p>
 
             <div class="d-flex justify-content-center">
-                <button class="btn btn-primary">Сбросить фильтр</button>
+                <button class="btn btn-primary">@Localizer["Reset filter"]</button>
             </div>
         }
     }
     else
     {
-        <p class="text-center">Пока что ближайших концертов нет. Подпишись, чтобы быть в курсе обо всех предстоящих концертах.</p>
+        <p class="text-center">@Localizer["No concerts"]</p>
     }
 </section>

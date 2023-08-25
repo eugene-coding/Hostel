@@ -9,14 +9,12 @@ public class ConcertModel
     /// Создаёт экземпляр класса.
     /// </summary>
     /// <param name="dateTime">Дата и время проведения концерта.</param>
-    /// <param name="minPrice">Минимальная цена билета.</param>
-    public ConcertModel(DateTime dateTime, int minPrice)
+    public ConcertModel(DateTime dateTime)
     {
         Month = dateTime.ToString("MMMM");
         DayOfWeek = dateTime.ToString("dddd");
         Day = dateTime.ToString("dd");
         Time = dateTime.ToString("t");
-        MinPrice = minPrice.ToString("# ##0");
     }
 
     /// <summary>
@@ -62,5 +60,5 @@ public class ConcertModel
     /// <summary>
     /// Минимальная цена билета.
     /// </summary>
-    public string MinPrice { get; }
+    public required int MinPrice { get; init; }
 }

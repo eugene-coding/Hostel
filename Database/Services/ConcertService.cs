@@ -31,12 +31,13 @@ public sealed class ConcertService : IConcertService
         var query = _concerts.AsNoTracking()
             .GetUpcoming()
             .OrderBy(concert => concert.DateTime)
-            .Select(concert => new ConcertModel(concert.DateTime, concert.MinPrice)
+            .Select(concert => new ConcertModel(concert.DateTime)
             {
                 Name = concert.Name,
                 City = concert.City,
                 Location = concert.Location,
                 TicketsLeft = concert.TicketsLeft,
+                MinPrice = concert.MinPrice,
             })
             .AsNoTracking()
             .AsAsyncEnumerable();
@@ -56,12 +57,13 @@ public sealed class ConcertService : IConcertService
             .GetUpcoming()
             .OrderBy(concert => concert.DateTime)
             .GetPage(page, concertsPerPage)
-            .Select(concert => new ConcertModel(concert.DateTime, concert.MinPrice)
+            .Select(concert => new ConcertModel(concert.DateTime)
             {
                 Name = concert.Name,
                 City = concert.City,
                 Location = concert.Location,
                 TicketsLeft = concert.TicketsLeft,
+                MinPrice = concert.MinPrice,
             })
             .AsNoTracking()
             .AsAsyncEnumerable();
