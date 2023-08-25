@@ -8,15 +8,15 @@ namespace Core.Interfaces;
 public interface IConcertService
 {
     /// <summary>
-    /// Вовзаращает список предстоящих концертов.
+    /// Возвращает список предстоящих концертов.
     /// </summary>
     /// <returns>Список предстоящих концертов.</returns>
     IAsyncEnumerable<ConcertModel> GetConcertModelsAsync();
 
     /// <summary>
-    /// Вовзаращает список предстоящих концертов на странице под номером <paramref name="page"/>.
+    /// Возвращает список предстоящих концертов на странице под номером <paramref name="page"/>.
     /// </summary>
-    /// <param name="page">Номер страницы</param>
+    /// <param name="page">Номер страницы.</param>
     /// <returns>Список предстоящих концертов на странице под номером <paramref name="page"/>.</returns>
     IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page);
 
