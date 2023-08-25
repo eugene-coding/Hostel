@@ -12,7 +12,7 @@ public static class ConcertQueryExtension
     /// <summary>
     /// Выбирает из последовательности предстоящие концерты.
     /// </summary>
-    /// <param name="concerts">Список концертов.</param>
+    /// <param name="concerts">Последовательность концертов.</param>
     /// <returns><see cref="IQueryable{T}"/>, содержащий предстоящие концерты.</returns>
     public static IQueryable<Concert> GetUpcoming(this DbSet<Concert> concerts)
     {
@@ -23,5 +23,36 @@ public static class ConcertQueryExtension
     public static IQueryable<Concert> GetUpcoming(this IQueryable<Concert> concerts)
     {
         return concerts.Where(concert => concert.DateTime > DateTime.Now);
+    }
+
+    /// <summary>
+    /// Выбирает из последовательности концерты, находящиеся на странице под номером <paramref name="page"/>.
+    /// </summary>
+    /// <param name="concerts">Последовательность концертов.</param>
+    /// <param name="page">Номер страницы.</param>
+    /// <param name="concertsPerPage">Количество концертов на странице.</param>
+    /// <returns>
+    /// <see cref="IQueryable{T}"/>, содержащий концерты, находящиеся на странице под номером <paramref name="page"/>.
+    /// </returns>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Выбрасывается, если <paramref name="page"/> или <paramref name="concertsPerPage"/> меньше единицы.
+    /// </exception>
+    public static IQueryable<Concert> GetPage(this IQueryable<Concert> concerts, int page, int concertsPerPage)
+    {
+        if (page < 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(page), page,
+                "Номер страницы не может быть меньше единицы.");
+        }
+
+        if (concertsPerPage < 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(concertsPerPage), concertsPerPage,
+                "Количество концертов на одной странице не может быть меньше единицы.");
+        }
+
+        return concerts
+            .Skip((page - 1) * concertsPerPage)
+            .Take(concertsPerPage);
     }
 }
