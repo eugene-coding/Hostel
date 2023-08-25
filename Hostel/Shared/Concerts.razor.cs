@@ -6,27 +6,48 @@ using Microsoft.AspNetCore.Components;
 namespace Hostel.Shared;
 
 /// <summary>
-/// 
+/// Блок отображения концертов.
 /// </summary>
 public partial class Concerts
 {
     private readonly List<ConcertModel> _concerts = new();
-    private int _concertCount;
+    private List<string> _cities = new();
+
+    private bool _displayLoadMoreButton;
+    private int _concertsCount;
+    private int _pageToLoad = 1;
 
     [Inject] private IConcertService Service { get; init; } = null!;
-    private bool DisplayLoadMoreButton { get; set; }
-    
+
     /// <inheritdoc/>
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await foreach (var concert in Service.GetConcertModelsAsync())
+        if (firstRender)
         {
-            _concerts.Add(concert);
+            _concertsCount = await Service.GetCountAsync();
+
+            await GetCities();
+            await GetNextPageAsync();
+
             StateHasChanged();
         }
+    }
 
-        _concertCount = await Service.GetCountAsync();
+    private async Task GetCities()
+    {
+        await foreach (var city in Service.GetCities())
+        {
+            _cities.Add(city);
+        }
+    }
 
-        DisplayLoadMoreButton = _concertCount > _concerts.Count; 
+    private async Task GetNextPageAsync()
+    {
+        await foreach (var concert in Service.GetConcertModelsAsync(_pageToLoad++))
+        {
+            _concerts.Add(concert);
+        }
+
+        _displayLoadMoreButton = _concertsCount > _concerts.Count;
     }
 }

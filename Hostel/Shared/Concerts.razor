@@ -1,12 +1,19 @@
-﻿<section class="section">
+﻿@attribute [RenderModeServer]
+
+<section class="section">
     <h2 class="title">Концерты</h2>
+
 
     <form class="mb-3">
         <div class="row justify-content-between">
             <div class="col-4 col-lg-3">
                 <select class="form-select">
-                    <option disabled selected>Город</option>
-                    <option>Волгоград</option>
+                    <option selected>Все города</option>
+
+                    @foreach (var city in _cities)
+                    {
+                        <option @key="city">@city</option>
+                    }
                 </select>
             </div>
 
@@ -19,47 +26,59 @@
         </div>
     </form>
 
-    @if (_concerts.Count > 0)
+    @if (_concertsCount > 0)
     {
-        <table class="table table-hover align-middle">
-            <tbody>
-                @foreach (var concert in _concerts)
-                {
-                    <tr>
-                        <td class="date d-flex flex-column flex-md-row text-center text-md-start">
-                            <div class="day">@concert.Day</div>
-
-                            <div class="month-week-and-time ms-md-3">
-                                <div>
-                                    @concert.Month, <time class="time">@concert.Time</time>
-                                </div>
-
-                                <div>@concert.DayOfWeek</div>
-                            </div>
-                        </td>
-
-                        <td class="text-center text-md-start">
-                            <div class="name">@concert.Name</div>
-                            <div>@concert.City, @concert.Location</div>
-                        </td>
-
-                        <td class="text-center">
-                            <div>@concert.TicketsLeft билета</div>
-                            <div>от @concert.MinPrice ₽</div>
-                        </td>
-
-                        <td class="text-end">
-                            <button class="btn btn-primary" type="button">Билеты</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        @if (DisplayLoadMoreButton)
+        @if (_concerts.Count > 0)
         {
+            <table class="table table-hover align-middle">
+                <tbody>
+                    @foreach (var concert in _concerts)
+                    {
+                        <tr @key="concert">
+                            <td class="date d-flex flex-column flex-md-row text-center text-md-start">
+                                <div class="day">@concert.Day</div>
+
+                                <div class="month-week-and-time ms-md-3">
+                                    <div>
+                                        @concert.Month, <time class="time">@concert.Time</time>
+                                    </div>
+
+                                    <div>@concert.DayOfWeek</div>
+                                </div>
+                            </td>
+
+                            <td class="text-center text-md-start">
+                                <div class="name">@concert.Name</div>
+                                <div>@concert.City, @concert.Location</div>
+                            </td>
+
+                            <td class="text-center">
+                                <div>@concert.TicketsLeft билета</div>
+                                <div>от @concert.MinPrice ₽</div>
+                            </td>
+
+                            <td class="text-end">
+                                <button class="btn btn-primary" type="button">Билеты</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+            @if (_displayLoadMoreButton)
+            {
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" @onclick="GetNextPageAsync">Загрузить ещё</button>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">С текущим фильтром ближайших концертов нет. Попробуйте изменить параметры поиска.</p>
+
             <div class="d-flex justify-content-center">
-                <button class="btn btn-primary">Загрузить ещё</button>
+                <button class="btn btn-primary">Сбросить фильтр</button>
             </div>
         }
     }
