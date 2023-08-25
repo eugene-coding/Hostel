@@ -73,6 +73,17 @@ public sealed class ConcertService : IConcertService
     }
 
     /// <inheritdoc/>
+    public IAsyncEnumerable<string> GetCities()
+    {
+        return _concerts.AsNoTracking()
+            .GetUpcoming()
+            .Select(concert => concert.City)
+            .Distinct()
+            .OrderBy(city => city)
+            .AsAsyncEnumerable();
+    }
+
+    /// <inheritdoc/>
     public async Task<int> GetCountAsync()
     {
         return await _concerts.AsNoTracking()

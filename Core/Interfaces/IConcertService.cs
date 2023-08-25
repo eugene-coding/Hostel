@@ -21,6 +21,12 @@ public interface IConcertService
     IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page);
 
     /// <summary>
+    /// Возвращает список городов, в которых планируются концерты.
+    /// </summary>
+    /// <returns>Список городов, в которых планируются концерты.</returns>
+    IAsyncEnumerable<string> GetCities();
+
+    /// <summary>
     /// Подсчитывает количество предстоящих концертов.
     /// </summary>
     /// <returns>Количество предстоящих концертов.</returns>
