@@ -39,7 +39,6 @@ public sealed class ConcertService : IConcertService
                 TicketsLeft = concert.TicketsLeft,
                 MinPrice = concert.MinPrice,
             })
-            .AsNoTracking()
             .AsAsyncEnumerable();
 
         await foreach (var concert in query)
@@ -65,7 +64,6 @@ public sealed class ConcertService : IConcertService
                 TicketsLeft = concert.TicketsLeft,
                 MinPrice = concert.MinPrice,
             })
-            .AsNoTracking()
             .AsAsyncEnumerable();
 
         await foreach (var concert in query)
