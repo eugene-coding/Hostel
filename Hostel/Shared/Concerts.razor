@@ -7,7 +7,7 @@
     <form class="mb-3">
         <div class="row justify-content-between">
             <div class="col-4 col-lg-3">
-                <select class="form-select" @onchange="CityChanged">
+                <select class="form-select" @onchange="OnCityChanged">
                     <option value="" selected>@Localizer["All cities"]</option>
 
                     @foreach (var city in _cities)
@@ -19,8 +19,8 @@
 
             <div class="col-6 col-md-5 col-lg-4">
                 <div class="input-group">
-                    <input type="date" class="form-control">
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control" min="@_minDate" @onchange="OnFromChanged" />
+                    <input type="date" class="form-control" min="@_minDate" @onchange="OnToChanged" />
                 </div>
             </div>
         </div>

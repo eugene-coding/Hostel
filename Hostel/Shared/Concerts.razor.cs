@@ -13,11 +13,12 @@ public partial class Concerts
 {
     private readonly List<ConcertModel> _concerts = new();
     private readonly List<string> _cities = new();
+    private readonly ConcertFilter _filter = new();
+    private readonly string _minDate = DateTime.Now.ToString("yyyy-MM-dd");
 
     private bool _displayLoadMoreButton;
     private int _concertsCount;
     private int _pageToLoad = 1;
-    private string? _city;
 
     [Inject] private IStringLocalizer<Concerts> Localizer { get; init; } = null!;
     [Inject] private IConcertService Service { get; init; } = null!;
@@ -56,7 +57,7 @@ public partial class Concerts
 
     private async Task GetFilteredByCity()
     {
-        await foreach (var concert in Service.GetConcertModelsAsync(_city, 1))
+        await foreach (var concert in Service.GetConcertModelsAsync(_filter.City, 1))
         {
             _concerts.Add(concert);
         }
@@ -64,12 +65,39 @@ public partial class Concerts
         _displayLoadMoreButton = _concertsCount > _concerts.Count;
     }
 
-    private async Task CityChanged(ChangeEventArgs e)
+    private void OnCityChanged(ChangeEventArgs e)
     {
-        _city = string.IsNullOrWhiteSpace(e.Value?.ToString()) ? null : e.Value?.ToString();
+        var city = e.Value?.ToString();
 
-        _concerts.Clear();
+        if (_filter.City != city)
+        {
+            _filter.City = city;
+        }
+    }
 
-        await GetFilteredByCity();
+    private void OnFromChanged(ChangeEventArgs e)
+    {
+        if (!DateTime.TryParse(e.Value?.ToString(), out var from))
+        {
+            return;
+        }
+
+        if (_filter.From != from)
+        {
+            _filter.From = from;
+        }
+    }
+
+    private void OnToChanged(ChangeEventArgs e)
+    {
+        if (!DateTime.TryParse(e.Value?.ToString(), out var to))
+        {
+            return;
+        }
+
+        if (_filter.To != to)
+        {
+            _filter.To = to;
+        }
     }
 }
