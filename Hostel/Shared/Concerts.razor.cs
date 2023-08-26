@@ -55,16 +55,6 @@ public partial class Concerts
         _displayLoadMoreButton = _concertsCount > _concerts.Count;
     }
 
-    private async Task GetFilteredByCity()
-    {
-        await foreach (var concert in Service.GetConcertModelsAsync(_filter.City, 1))
-        {
-            _concerts.Add(concert);
-        }
-
-        _displayLoadMoreButton = _concertsCount > _concerts.Count;
-    }
-
     private void OnCityChanged(ChangeEventArgs e)
     {
         var city = e.Value?.ToString();
