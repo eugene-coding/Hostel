@@ -118,7 +118,16 @@ public sealed class ConcertService : IConcertService
     public async Task<int> GetCountAsync()
     {
         return await _concerts.AsNoTracking()
-            .GetUpcoming()
-            .CountAsync();
+             .GetUpcoming()
+             .CountAsync();
+    }
+
+    /// <inheritdoc/>
+    public async Task<int> GetCountAsync(ConcertFilter filter)
+    {
+        return await _concerts.AsNoTracking()
+             .GetUpcoming()
+             .ApplyFilter(filter)
+             .CountAsync();
     }
 }

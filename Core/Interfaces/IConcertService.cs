@@ -39,4 +39,12 @@ public interface IConcertService
     /// </summary>
     /// <returns>Количество предстоящих концертов.</returns>
     Task<int> GetCountAsync();
+
+    /// <summary>
+    /// Подсчитывает количество предстоящих концертов, подходящих под условия в <paramref name="filter"/>.
+    /// </summary>
+    /// <returns>
+    /// Количество предстоящих концертов?подходящих под условия в <paramref name="filter"/>.
+    /// </returns>
+    Task<int> GetCountAsync(ConcertFilter filter);
 }
