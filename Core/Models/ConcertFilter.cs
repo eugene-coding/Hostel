@@ -27,4 +27,17 @@ public sealed class ConcertFilter
     /// Конечная дата.
     /// </summary>
     public DateTime? To { get; set; }
+
+    /// <summary>
+    /// Определяет, пустой ли фильтр: равны ли все значения <see langword="null"/>.
+    /// </summary>
+    /// <returns>
+    /// <see langword="true"/>, если фильтр пустой, иначе - <see langword="false"/>.
+    /// </returns>
+    public bool IsEmpty()
+    {
+        return City is null 
+            && From is null 
+            && To is null;
+    }
 }
