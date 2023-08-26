@@ -72,6 +72,8 @@ public partial class Concerts
         if (_filter.City != city)
         {
             _filter.City = city;
+
+            _concerts.Clear();
         }
     }
 
@@ -85,6 +87,8 @@ public partial class Concerts
         if (_filter.From != from)
         {
             _filter.From = from;
+
+            _concerts.Clear();
         }
     }
 
@@ -98,6 +102,8 @@ public partial class Concerts
         if (_filter.To != to)
         {
             _filter.To = to;
+
+            _concerts.Clear();
         }
     }
 }
