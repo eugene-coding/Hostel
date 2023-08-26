@@ -1,7 +1,7 @@
 ﻿namespace Core.Models;
 
 /// <summary>
-/// Модель для информации о коцерте.
+/// Модель для информации о концерте.
 /// </summary>
 public class ConcertModel
 {
