@@ -1,4 +1,6 @@
-﻿using Database.Models;
+﻿using Core.Models;
+
+using Database.Models;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -54,5 +56,33 @@ public static class ConcertQueryExtension
         return concerts
             .Skip((page - 1) * concertsPerPage)
             .Take(concertsPerPage);
+    }
+
+    /// <summary>
+    /// Применяет к последовательности концертов <paramref name="filter"/>.
+    /// </summary>
+    /// <param name="concerts">Последовательность концертов.</param>
+    /// <param name="filter">Фильтр концертов.</param>
+    /// <returns>
+    /// <see cref="IQueryable{T}"/>, содержащий концерты, отфильтрованные с помощью <paramref name="filter"/>.
+    /// </returns>
+    public static IQueryable<Concert> ApplyFilter(this IQueryable<Concert> concerts, ConcertFilter filter)
+    {
+        if (filter.City is not null)
+        {
+            concerts = concerts.Where(concert => concert.City == filter.City);
+        }
+
+        if (filter.From is not null)
+        {
+            concerts = concerts.Where(concert => concert.DateTime >= filter.From);
+        }
+
+        if (filter.To is not null)
+        {
+            concerts = concerts.Where(concert => concert.DateTime <= filter.To);
+        }
+
+        return concerts;
     }
 }
