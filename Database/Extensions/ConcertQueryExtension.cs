@@ -68,17 +68,17 @@ public static class ConcertQueryExtension
     /// </returns>
     public static IQueryable<Concert> ApplyFilter(this IQueryable<Concert> concerts, ConcertFilter filter)
     {
-        if (filter.City is not null)
+        if (filter.ShouldFilterByCity())
         {
             concerts = concerts.Where(concert => concert.City == filter.City);
         }
 
-        if (filter.From is not null)
+        if (filter.ShouldFilterByFrom())
         {
             concerts = concerts.Where(concert => concert.DateTime >= filter.From);
         }
 
-        if (filter.To is not null)
+        if (filter.ShouldFilterByTo())
         {
             concerts = concerts.Where(concert => concert.DateTime <= filter.To);
         }
