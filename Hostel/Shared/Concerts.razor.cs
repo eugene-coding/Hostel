@@ -69,36 +69,6 @@ public partial class Concerts
         _displayLoadMoreButton = _totalConcertsCount > _concerts.Count;
     }
 
-    private void OnCityChanged(ChangeEventArgs e)
-    {
-        var city = e.Value?.ToString() ?? string.Empty;
-        _filter.City = city;
-    }
-
-    private void OnFromChanged(ChangeEventArgs e)
-    {
-        if (DateTime.TryParse(e.Value?.ToString(), out var from))
-        {
-            _filter.From = from;
-        }
-        else
-        {
-            _filter.ResetFrom();
-        }
-    }
-
-    private void OnToChanged(ChangeEventArgs e)
-    {
-        if (DateTime.TryParse(e.Value?.ToString(), out var to))
-        {
-            _filter.To = to;
-        }
-        else
-        {
-            _filter.ResetTo();
-        }
-    }
-
     private void OnClearReset(MouseEventArgs e)
     {
         _filter.Reset();

@@ -5,13 +5,11 @@
 /// </summary>
 public sealed class ConcertFilter
 {
-    private static readonly string s_defaultCity = string.Empty;
-    private static readonly DateTime s_defaultTo = DateTime.MinValue;
     private readonly DateTime _defaultFrom;
 
-    private string _city = s_defaultCity;
-    private DateTime _from;
-    private DateTime _to;
+    private string _city = string.Empty;
+    private DateTime? _from;
+    private DateTime? _to;
 
     /// <summary>
     /// Создаёт экземпляр класса.
@@ -34,7 +32,6 @@ public sealed class ConcertFilter
     public ConcertFilter(DateTime today, Func<Task> eventHandler)
     {
         _defaultFrom = today;
-        _from = today;
 
         FilterChanged += eventHandler;
     }
@@ -74,12 +71,12 @@ public sealed class ConcertFilter
     /// срабатывает событие <see cref="FilterChanged"/>.
     /// </para>
     /// </remarks>
-    public DateTime From
+    public DateTime? From
     {
         get => _from;
         set
         {
-            var date = value.Date;
+            var date = value?.Date;
 
             if (_from != date)
             {
@@ -109,13 +106,13 @@ public sealed class ConcertFilter
     /// срабатывает событие <see cref="FilterChanged"/>.
     /// </para>
     /// </remarks>
-    public DateTime To
+    public DateTime? To
     {
         get => _to;
         set
         {
             // Добавляем день, чтобы сортировка осуществлялась включительно.
-            var date = value.Date.AddDays(1);
+            var date = value?.Date.AddDays(1);
 
             if (_to != date)
             {
@@ -140,7 +137,7 @@ public sealed class ConcertFilter
     /// </returns>
     public bool ShouldFilterByCity()
     {
-        return City != s_defaultCity;
+        return City != string.Empty;
     }
 
     /// <summary>
@@ -152,7 +149,7 @@ public sealed class ConcertFilter
     /// </returns>
     public bool ShouldFilterByFrom()
     {
-        return From != _defaultFrom;
+        return From is not null && From != _defaultFrom;
     }
 
     /// <summary>
@@ -164,31 +161,7 @@ public sealed class ConcertFilter
     /// </returns>
     public bool ShouldFilterByTo()
     {
-        return To >= _defaultFrom;
-    }
-
-    /// <summary>
-    /// Сбрасывает фильтр по <see cref="City"/>.
-    /// </summary>
-    public void ResetCity()
-    {
-        City = s_defaultCity;
-    }
-
-    /// <summary>
-    /// Сбрасывает фильтр по <see cref="From"/>.
-    /// </summary>
-    public void ResetFrom()
-    {
-        From = _defaultFrom;
-    }
-
-    /// <summary>
-    /// Сбрасывает фильтр по <see cref="To"/>.
-    /// </summary>
-    public void ResetTo()
-    {
-        To = s_defaultTo;
+        return To is not null && To >= _defaultFrom;
     }
 
     /// <summary>
@@ -196,9 +169,9 @@ public sealed class ConcertFilter
     /// </summary>
     public void Reset()
     {
-        _city = s_defaultCity;
-        _from = _defaultFrom;
-        _to = s_defaultTo;
+        _city = string.Empty;
+        _from = default;
+        _to = default;
 
         FilterChanged?.Invoke();
     }
