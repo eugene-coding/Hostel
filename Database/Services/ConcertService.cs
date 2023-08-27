@@ -48,12 +48,13 @@ public sealed class ConcertService : IConcertService
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page)
+    public async IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page, ConcertFilter filter)
     {
         var concertsPerPage = await _setting.GetConcertsPerPageAsync();
 
         var query = _concerts.AsNoTracking()
             .GetUpcoming()
+            .ApplyFilter(filter)
             .OrderBy(concert => concert.DateTime)
             .GetPage(page, concertsPerPage)
             .Select(concert => new ConcertModel(concert.DateTime)

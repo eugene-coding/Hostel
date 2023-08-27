@@ -14,11 +14,13 @@ public interface IConcertService
     IAsyncEnumerable<ConcertModel> GetConcertModelsAsync();
 
     /// <summary>
-    /// Возвращает список предстоящих концертов на странице под номером <paramref name="page"/>.
+    /// Возвращает список предстоящих концертов, подходящих под условия <paramref name="filter"/>,
+    /// на странице под номером <paramref name="page"/>.
     /// </summary>
     /// <param name="page">Номер страницы.</param>
+    /// <param name="filter">Фильтр.</param>
     /// <returns>Список предстоящих концертов на странице под номером <paramref name="page"/>.</returns>
-    IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page);
+    IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page, ConcertFilter filter);
 
     /// <summary>
     /// Возвращает список предстоящих концертов на странице под номером <paramref name="page"/>.
