@@ -8,12 +8,6 @@ namespace Core.Interfaces;
 public interface IConcertService
 {
     /// <summary>
-    /// Возвращает список предстоящих концертов.
-    /// </summary>
-    /// <returns>Список предстоящих концертов.</returns>
-    IAsyncEnumerable<ConcertModel> GetConcertModelsAsync();
-
-    /// <summary>
     /// Возвращает список предстоящих концертов, подходящих под условия <paramref name="filter"/>,
     /// на странице под номером <paramref name="page"/>.
     /// </summary>
@@ -21,14 +15,6 @@ public interface IConcertService
     /// <param name="filter">Фильтр.</param>
     /// <returns>Список предстоящих концертов на странице под номером <paramref name="page"/>.</returns>
     IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page, ConcertFilter filter);
-
-    /// <summary>
-    /// Возвращает список предстоящих концертов на странице под номером <paramref name="page"/>.
-    /// </summary>
-    /// <param name="city">Город проведения концертов.</param>
-    /// <param name="page">Номер страницы.</param>
-    /// <returns>Список предстоящих концертов на странице под номером <paramref name="page"/>.</returns>
-    IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(string? city, int page);
 
     /// <summary>
     /// Возвращает список городов, в которых планируются концерты.

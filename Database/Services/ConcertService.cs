@@ -26,28 +26,6 @@ public sealed class ConcertService : IConcertService
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ConcertModel> GetConcertModelsAsync()
-    {
-        var query = _concerts.AsNoTracking()
-            .GetUpcoming()
-            .OrderBy(concert => concert.DateTime)
-            .Select(concert => new ConcertModel(concert.DateTime)
-            {
-                Name = concert.Name,
-                City = concert.City,
-                Location = concert.Location,
-                TicketsLeft = concert.TicketsLeft,
-                MinPrice = concert.MinPrice,
-            })
-            .AsAsyncEnumerable();
-
-        await foreach (var concert in query)
-        {
-            yield return concert;
-        }
-    }
-
-    /// <inheritdoc/>
     public async IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(int page, ConcertFilter filter)
     {
         var concertsPerPage = await _setting.GetConcertsPerPageAsync();
@@ -66,37 +44,6 @@ public sealed class ConcertService : IConcertService
                 MinPrice = concert.MinPrice,
             })
             .AsAsyncEnumerable();
-
-        await foreach (var concert in query)
-        {
-            yield return concert;
-        }
-    }
-
-    /// <inheritdoc/>
-    public async IAsyncEnumerable<ConcertModel> GetConcertModelsAsync(string? city, int page)
-    {
-        var concertsPerPage = await _setting.GetConcertsPerPageAsync();
-
-        var upcoming = _concerts.AsNoTracking()
-            .GetUpcoming();
-
-        if (city is not null)
-        {
-            upcoming = upcoming.Where(concert => concert.City == city);
-        }
-
-        var query = upcoming.OrderBy(concert => concert.DateTime)
-             .GetPage(page, concertsPerPage)
-             .Select(concert => new ConcertModel(concert.DateTime)
-             {
-                 Name = concert.Name,
-                 City = concert.City,
-                 Location = concert.Location,
-                 TicketsLeft = concert.TicketsLeft,
-                 MinPrice = concert.MinPrice,
-             })
-             .AsAsyncEnumerable();
 
         await foreach (var concert in query)
         {
